@@ -101,12 +101,12 @@ class NoiseGenerator{
     }
     
     func update() {
-        noise = GKNoise(noiseSource: noiseSource as! GKNoiseSource, gradientColors: [-1: #colorLiteral(red: 0.6823074818, green: 0.08504396677, blue: 0.06545677781, alpha: 1), -0.75: #colorLiteral(red: 0.9346159697, green: 0.6284804344, blue: 0.1077284366, alpha: 1), -0.5: #colorLiteral(red: 0.9672742486, green: 0.8225458264, blue: 0.4772382379, alpha: 1), -0.25: #colorLiteral(red: 0.4028071761, green: 0.7315050364, blue: 0.2071235478, alpha: 1), 0: #colorLiteral(red: 0.1991284192, green: 0.6028449535, blue: 0.9592232704, alpha: 1), 0.25: #colorLiteral(red: 0.1142767668, green: 0.3181744218, blue: 0.4912756383, alpha: 1), 0.5: #colorLiteral(red: 0.1603052318, green: 0, blue: 0.8195188642, alpha: 1), 1: #colorLiteral(red: 0.8100712299, green: 0.1511939615, blue: 0.4035313427, alpha: 1) ] )
+        noise = GKNoise(noiseSource as! GKNoiseSource, gradientColors: [-1: #colorLiteral(red: 0.6823074818, green: 0.08504396677, blue: 0.06545677781, alpha: 1), -0.75: #colorLiteral(red: 0.9346159697, green: 0.6284804344, blue: 0.1077284366, alpha: 1), -0.5: #colorLiteral(red: 0.9672742486, green: 0.8225458264, blue: 0.4772382379, alpha: 1), -0.25: #colorLiteral(red: 0.4028071761, green: 0.7315050364, blue: 0.2071235478, alpha: 1), 0: #colorLiteral(red: 0.1991284192, green: 0.6028449535, blue: 0.9592232704, alpha: 1), 0.25: #colorLiteral(red: 0.1142767668, green: 0.3181744218, blue: 0.4912756383, alpha: 1), 0.5: #colorLiteral(red: 0.1603052318, green: 0, blue: 0.8195188642, alpha: 1), 1: #colorLiteral(red: 0.8100712299, green: 0.1511939615, blue: 0.4035313427, alpha: 1) ] )
         noise?.move(by: translation)
     }
     
     func cgImage() -> CGImage {
-        noiseMap = GKNoiseMap(noise: noise!, size: size, origin: vector_double2(100, 100), sampleCount: vector_int2(Int32(size.x) / 4, Int32(size.y) / 4), seamless: false)
+        noiseMap = GKNoiseMap(noise!, size: size, origin: vector_double2(100, 100), sampleCount: vector_int2(Int32(size.x) / 4, Int32(size.y) / 4), seamless: false)
         return SKTexture(noiseMap: noiseMap!).cgImage()
     }
 }
@@ -353,7 +353,7 @@ extension ViewController: UIGestureRecognizerDelegate {
     func panImage(recognizer: UIPanGestureRecognizer){
         let translation = recognizer.translation(in: view)
         let delta: vector_double3
-        if recognizer.numberOfTouches() < 2 {
+        if recognizer.numberOfTouches < 2 {
             // pan around the image with one touch (nb translate X and Z components)
             delta = vector_double3(Double(-translation.x) / 2, 0, Double(translation.y) / 2) 
         } else {
